@@ -11,21 +11,19 @@ main(int argc,char *argv[])
 {
         char *attr_name;
         size_t size = 0;
-        int val,i,ret = 0;
+        int val,i,ret = -1;
         FILE *fp;
         if(argc==4){
                 fp=fopen(argv[1],"r");
                  
                 if(fp==NULL){
                         printf("%s",strerror(errno));
-                        ret=-1;
                         goto out;
                 }
                 
                 for(i=0;i<strlen(argv[3]);i++) {
                         if(argv[3][i]<'0' || argv[3][i]>'9') {
                                 printf("pass the proper arguments\n\n");
-                                ret=-1;
                                 goto out;
                         }
                 }
@@ -34,7 +32,6 @@ main(int argc,char *argv[])
                 attr_name = (char *) calloc ((strlen(argv[3]) + 9),(sizeof (char)));
                 if (!attr_name) {
                         printf("NOt enough memory \n");
-                        ret = -1;
                         goto out;
                 }
                 strcpy(attr_name,"trusted.");
@@ -67,17 +64,23 @@ main(int argc,char *argv[])
                         size = getxattr(argv[1],attr_name,&val,sizeof(val));
                         if(size > 0)
                                 printf ("Attribute value retrieved.\n\n%s = %d\n", attr_name , val);
-                        else
+                        else {
                                 printf ("Error while accessing the existing attribute value\n");
-                } else
+                                goto out;
+                        }
+                } else {
                         printf ("Error While Setting the new Attribute\n\n");
+                        goto out;
+                }
+                ret = 0;
         }
         else
                 printf("Please give the proper number of arguments");
+        
 out:
         if (!attr_name)
                 free(attr_name);
-        if (ret == 0)
+        if (ret != -1)
                 return 0;
         else
                 return -1;
