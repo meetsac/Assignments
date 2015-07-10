@@ -11,25 +11,32 @@ main(int argc,char *argv[])
 {
         char *attr_name;
         size_t size = 0;
-        int val,i;
+        int val,i,ret = 0;
         FILE *fp;
         if(argc==4){
                 fp=fopen(argv[1],"r");
                  
                 if(fp==NULL){
                         printf("%s",strerror(errno));
+                        ret=-1;
                         goto out;
                 }
                 
                 for(i=0;i<strlen(argv[3]);i++) {
                         if(argv[3][i]<'0' || argv[3][i]>'9') {
                                 printf("pass the proper arguments\n\n");
+                                ret=-1;
                                 goto out;
                         }
                 }
                 
                 val = atoi(argv[3]);
-                attr_name = (char *) malloc ((sizeof (char) * (strlen(argv[3]) + 9)));
+                attr_name = (char *) calloc ((strlen(argv[3]) + 9),(sizeof (char)));
+                if (!attr_name) {
+                        printf("NOt enough memory \n");
+                        ret = -1;
+                        goto out;
+                }
                 strcpy(attr_name,"trusted.");
                 strcat(attr_name,argv[2]);
                 /*new attribute is added
@@ -67,5 +74,11 @@ main(int argc,char *argv[])
         }
         else
                 printf("Please give the proper number of arguments");
-out:        return 0;
+out:
+        if (!attr_name)
+                free(attr_name);
+        if (ret == 0)
+                return 0;
+        else
+                return -1;
 }
