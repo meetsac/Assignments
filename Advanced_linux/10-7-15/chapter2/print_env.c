@@ -1,4 +1,5 @@
 #include<stdio.h>
+/*Program to display the environment variables*/
 extern char** environ;
 int main ()
 {

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+/*Program to check working of atoi function*/
 void main()
 {
     char buffer[20];

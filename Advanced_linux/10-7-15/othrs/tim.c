@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+/*Program to display the current time*/
 main()
 {
         time_t t = time(NULL);

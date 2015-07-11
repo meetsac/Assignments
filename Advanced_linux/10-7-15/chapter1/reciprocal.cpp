@@ -1,6 +1,6 @@
 #include <cassert>
 #include "reciprocal.hpp"
-double reciprocal (int i) {
-        assert (i != 0);
-        return 1.0/i;
+double reciprocal (int num) {
+        assert (num != 0);
+        return 1.0/num;
 }

@@ -1,11 +1,14 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+/*Program to show the working of getopt_long function*/
 const char* program_name;
 void print_usage (FILE* stream, int exit_code)
 {
         fprintf(stream,"Usage: %s options [ inputfile...]\n", program_name);
-        fprintf(stream," -h --help    Display this usage info.\n-o --output  filename Write output to file\n-v --verbose Print verbose messages.");
+        fprintf(stream," -h --help    Display this usage info.\n"
+        "-o --output  filename Write output to file\n"
+        "-v --verbose Print verbose messages.");
         exit (exit_code);
 }
 
@@ -31,12 +34,15 @@ int main (int argc, char* argv[])
                                  print_usage (stdout, 0);
                         case 'o':/*output*/
                                  output_filename = optarg;
+                                 printf("output is choosen\n");
                                  break;
                         case 'v':/*verbose*/
                                  verbose = 1;
+                                 printf("verbose is choosen\n");
                                  break;
                         case '?':/*user specified invalid option.*/
                                  print_usage (stderr, 1);
+                                 printf("Invalid option\n");
                         case -1:break;
                         default:abort ();
                 }
