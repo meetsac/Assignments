@@ -9,7 +9,7 @@
 int
 main(int argc,char *argv[])
 {
-        char *attr_name;
+        char *attr_name = NULL;
         size_t size = 0;
         int val,i,ret = -1;
         FILE *fp;
